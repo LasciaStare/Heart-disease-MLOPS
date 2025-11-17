@@ -1,0 +1,42 @@
+# Book settings
+# See https://jupyterbook.org/customize/config.html for more options
+
+# Core information about the book
+title: Heart Disease MLOps Book
+author: Jose Menco, Iván Ramirez, Camilo Vargas
+logo: logo.png
+copyright: "2025, Heart Disease MLOps"
+
+repository:
+  url: https://github.com/LasciaStare/Heart-disease-MLOPS
+  path_to_book: .
+  branch: main
+html:
+  favicon: logo.png
+  use_issues_button: true
+  use_repository_button: true
+execute:
+  execute_notebooks: "off"
+only_build_toc_files: true
+launch_buttons:
+  notebook_interface: classic
+  binderhub_url: ""
+  thebe: false
+sphinx:
+  config:
+    language: es
+    exclude_patterns:
+      - _build
+      - .venv/**
+      - node_modules/**
+      - Scripts/**
+      - docker/**
+      - k8s/**
+      - app/**
+      - artifacts/**
+      - tests/**
+      - .github/**
+      - drift_report.html
+      - README.md
+pdf:
+  latex_engine: pdflatex
