@@ -1,6 +1,11 @@
 # MLOps Project
 
 ---
+## LOCAL:
+
+https://github.com/user-attachments/assets/fea55a27-0122-409c-87c2-6b193cc2aa30
+
+
 
 ## Descripción General
 
