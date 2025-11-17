@@ -42,9 +42,16 @@ jobs:
       # 4. Crear estructura de Jupyter Book
       - name: Create Jupyter Book Structure
         run: |
+          rm -rf book
           mkdir -p book
           cp notebooks/*.ipynb book/
-          cp notebooks/heart.csv book/
+
+          # Copiar dataset si existe, pero dentro de una carpeta dedicada
+          if [ -f notebooks/heart.csv ]; then
+            mkdir -p book/data
+            cp notebooks/heart.csv book/data/
+          fi
+
           cp logo.png book/
           
           # Crear _config.yml
@@ -54,7 +61,7 @@ jobs:
           logo: logo.png
           
           execute:
-            execute_notebooks: "off"
+            execute_notebooks: "off"  # No ejecutar notebooks (ya tienen outputs)
           
           html:
             use_repository_button: true
@@ -68,6 +75,9 @@ jobs:
           sphinx:
             config:
               html_theme: sphinx_book_theme
+              html_theme_options:
+                repository_url: https://github.com/${{ github.repository }}
+                use_repository_button: true
           EOF
           
           # Crear _toc.yml (Table of Contents)
@@ -124,8 +134,17 @@ jobs:
       # 5. Construir Jupyter Book
       - name: Build Jupyter Book
         run: |
-          # Cambiar al directorio del libro y construir desde allí
-          jupyter-book build book
+          cd book
+          jupyter-book build .
+          
+          # Verificar que se creó el directorio de salida
+          if [ ! -d "_build/html" ]; then
+            echo "Error: book/_build/html no fue creado"
+            exit 1
+          fi
+          
+          echo "✓ Jupyter Book construido exitosamente"
+          ls -la _build/html
       
       # 6. Configurar GitHub Pages
       - name: Setup Pages
