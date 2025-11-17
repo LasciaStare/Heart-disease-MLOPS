@@ -43,7 +43,8 @@ jobs:
       - name: Create Jupyter Book Structure
         run: |
           mkdir -p book
-          cp -r notebooks/* book/
+          cp notebooks/*.ipynb book/
+          cp notebooks/heart.csv book/
           cp logo.png book/
           
           # Crear _config.yml
@@ -53,7 +54,7 @@ jobs:
           logo: logo.png
           
           execute:
-            execute_notebooks: "off"  # No ejecutar notebooks (ya tienen outputs)
+            execute_notebooks: "off"
           
           html:
             use_repository_button: true
@@ -67,9 +68,6 @@ jobs:
           sphinx:
             config:
               html_theme: sphinx_book_theme
-              html_theme_options:
-                repository_url: https://github.com/${{ github.repository }}
-                use_repository_button: true
           EOF
           
           # Crear _toc.yml (Table of Contents)
