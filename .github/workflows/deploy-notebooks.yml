@@ -124,16 +124,8 @@ jobs:
       # 5. Construir Jupyter Book
       - name: Build Jupyter Book
         run: |
-          jupyter-book build .
-          
-          # Verificar que se creó el directorio de salida
-          if [ ! -d "book/_build/html" ]; then
-            echo "Error: book/_build/html no fue creado"
-            exit 1
-          fi
-          
-          echo "✓ Jupyter Book construido exitosamente"
-          ls -la book/_build/html
+          # Cambiar al directorio del libro y construir desde allí
+          jupyter-book build book
       
       # 6. Configurar GitHub Pages
       - name: Setup Pages
