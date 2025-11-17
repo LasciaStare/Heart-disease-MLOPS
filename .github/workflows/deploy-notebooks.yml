@@ -37,11 +37,7 @@ jobs:
       
       - name: Create Book Structure
         run: |
-          mkdir -p notebooks
-          cp notebooks/*.ipynb notebooks/ 2>/dev/null || true
-          cp logo.png notebooks/ 2>/dev/null || true
-          
-          cat > notebooks/_config.yml << 'EOF'
+          cat > _config.yml << 'EOF'
           title: Heart Disease Prediction - MLOps
           author: Jose Menco, Iván Ramirez, Camilo Vargas
           logo: logo.png
@@ -59,17 +55,17 @@ jobs:
             branch: main
           EOF
           
-          cat > notebooks/_toc.yml << 'EOF'
+          cat > _toc.yml << 'EOF'
           format: jb-book
           root: intro
           chapters:
-            - file: 1_model_leakage_demo
+            - file: notebooks/1_model_leakage_demo
               title: "1. Data Leakage Demonstration"
-            - file: 2_model_pipeline_cv
+            - file: notebooks/2_model_pipeline_cv
               title: "2. Model Training Pipeline"
           EOF
           
-          cat > notebooks/intro.md << 'EOF'
+          cat > intro.md << 'EOF'
           # Heart Disease Prediction - MLOps Project
           
           ## Descripción
@@ -109,14 +105,12 @@ jobs:
           EOF
       
       - name: Build HTML Assets
-        run: |
-          cd notebooks
-          jupyter-book build --html
+        run: jupyter-book build --html
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'notebooks/_build/html'
+          path: './_build/html'
       
       - name: Deploy to GitHub Pages
         id: deployment
