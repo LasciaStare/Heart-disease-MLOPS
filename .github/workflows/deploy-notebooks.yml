@@ -1,21 +1,27 @@
-name: Deploy Notebooks with Jupyter Book
+# This file was created automatically with `jupyter-book init --gh-pages` 🪄 💚
+# Ensure your GitHub Pages settings for this repository are set to deploy with **GitHub Actions**.
 
+name: Jupyter Book (via myst) GitHub Pages Deploy
 on:
   push:
+    # Runs on pushes targeting the default branch
     branches: [main]
-
 env:
+  # `BASE_URL` determines, relative to the root of the domain, the URL that your site is served from.
+  # E.g., if your site lives at `https://mydomain.org/myproject`, set `BASE_URL=/myproject`.
+  # If, instead, your site lives at the root of the domain, at `https://mydomain.org`, set `BASE_URL=''`.
   BASE_URL: /${{ github.event.repository.name }}
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
-
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: 'pages'
   cancel-in-progress: false
-
 jobs:
   deploy:
     environment:
@@ -24,94 +30,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
       - name: Setup Pages
         uses: actions/configure-pages@v3
-      
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
-      
       - name: Install Jupyter Book (via myst)
         run: npm install -g jupyter-book
-      
-      - name: Create Book Structure
-        run: |
-          cat > _config.yml << 'EOF'
-          title: Heart Disease Prediction - MLOps
-          author: Jose Menco, Iván Ramirez, Camilo Vargas
-          logo: logo.png
-          
-          execute:
-            execute_notebooks: "off"
-          
-          html:
-            use_repository_button: true
-            use_issues_button: true
-            home_page_in_navbar: false
-          
-          repository:
-            url: https://github.com/${{ github.repository }}
-            branch: main
-          EOF
-          
-          cat > _toc.yml << 'EOF'
-          format: jb-book
-          root: intro
-          chapters:
-            - file: notebooks/1_model_leakage_demo
-              title: "1. Data Leakage Demonstration"
-            - file: notebooks/2_model_pipeline_cv
-              title: "2. Model Training Pipeline"
-          EOF
-          
-          cat > intro.md << 'EOF'
-          # Heart Disease Prediction - MLOps Project
-          
-          ## Descripción
-          
-          Este proyecto implementa un pipeline completo de **Machine Learning Operations (MLOps)** para entrenar, desplegar y servir un modelo de clasificación que predice el riesgo de enfermedad cardíaca.
-          
-          ## Notebooks Disponibles
-          
-          ### 1. Data Leakage Demonstration
-          Análisis exploratorio y demostración del impacto del data leakage en el rendimiento de modelos de ML.
-          
-          ### 2. Model Training Pipeline  
-          Pipeline de entrenamiento con GridSearchCV, optimización de hiperparámetros y selección del mejor modelo basado en Recall.
-          
-          ## Resultados del Modelo
-          
-          | Métrica | Valor |
-          |---------|-------|
-          | **Recall** | 91.18% |
-          | **AUC** | 0.9397 |
-          | **Accuracy** | 89.67% |
-          | **Precision** | 90.29% |
-          | **F1-Score** | 90.73% |
-          
-          ## Dataset
-          
-          - **Tamaño**: 918 pacientes
-          - **Features**: 12 variables clínicas
-          - **Target**: HeartDisease (0 = No, 1 = Sí)
-          - **Split**: 80% train / 20% test
-          
-          ## Autores
-          
-          - Jose Menco
-          - Iván Ramirez
-          - Camilo Vargas
-          EOF
-      
       - name: Build HTML Assets
         run: jupyter-book build --html
-      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './_build/html'
-      
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
