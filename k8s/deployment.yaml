@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: heart-model-deployment
+  labels:
+    app: heart-model
+    version: v1
+spec:
+  replicas: 2  # Alta disponibilidad con 2 réplicas
+  selector:
+    matchLabels:
+      app: heart-model
+  template:
+    metadata:
+      labels:
+        app: heart-model
+        version: v1
+    spec:
+      containers:
+        - name: model-api-container
+          # IMPORTANTE: Reemplaza <TU_USUARIO_DOCKER> con tu usuario de Docker Hub
+          # Ejemplo: miusuario/heart-api:latest
+          image: lasciastare/heart-api:latest
+          ports:
+            - containerPort: 8000
+              name: http
+          # Health checks para garantizar que el contenedor está listo
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          # Límites de recursos para evitar consumo excesivo
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          # Variables de entorno (opcional)
+          env:
+            - name: MODEL_PATH
+              value: "app/model.joblib"
+            - name: PORT
+              value: "8000"

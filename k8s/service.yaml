@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: heart-model-service
+  labels:
+    app: heart-model
+spec:
+  # LoadBalancer: Ideal para Docker Desktop y Minikube
+  # En Docker Desktop, obtendrás localhost como EXTERNAL-IP
+  type: LoadBalancer
+  selector:
+    app: heart-model  # Debe coincidir con las labels del Deployment
+  ports:
+    - protocol: TCP
+      port: 80        # Puerto externo del servicio
+      targetPort: 8000  # Puerto del contenedor (donde escucha FastAPI)
+      name: http
+  # sessionAffinity para mantener sesiones (opcional)
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
