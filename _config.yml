@@ -1,9 +1,5 @@
-# Book settings
-# See https://jupyterbook.org/customize/config.html for more options
-
-# Core information about the book
 title: Heart Disease MLOps Book
-author: Jose Menco, Iván Ramirez, Camilo Vargas
+author: José Menco, Iván Ramirez, Camilo Vargas
 logo: logo.png
 copyright: "2025, Heart Disease MLOps"
 
@@ -12,7 +8,7 @@ repository:
   path_to_book: .
   branch: main
 html:
-  favicon: logo.png
+  favicon: icon.png
   use_issues_button: true
   use_repository_button: true
 execute:

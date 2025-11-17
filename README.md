@@ -385,9 +385,8 @@ Workflow que despliega automáticamente los notebooks como un libro interactivo 
 6. **Despliegue a GitHub Pages** automático
 
 **Resultado**: Los notebooks se publican en una web interactiva accesible en:
-```
-https://lasciastare.github.io//
-```
+[Notebooks](https://lasciastare.github.io/Heart-disease-MLOPS/)
+
 
 ### **Suite de Pruebas** (`tests/test_api.py`)
 
@@ -450,7 +449,6 @@ python Scripts/generate_drift_report.py
 start drift_report.html
 ```
 
-
 ---
 
 ## Resultados del Modelo
@@ -489,6 +487,6 @@ start drift_report.html
 
 ## Autores
 
-- **Jose Menco**
+- **José Menco**
 - **Iván Ramirez**
 - **Camilo Vargas**

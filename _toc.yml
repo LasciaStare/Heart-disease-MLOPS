@@ -2,4 +2,6 @@ format: jb-book
 root: intro
 chapters:
   - file: notebooks/1_model_leakage_demo
+    title: EDA y Data Leakage
   - file: notebooks/2_model_pipeline_cv
+    title: Modelo final
