@@ -44,7 +44,7 @@ Final/
 │   ├── __init__.py                      # Paquete de pruebas
 │   └── test_api.py                      # Suite de pruebas para la API
 │
-├── tests/
+├── artifacts/
 │   ├── X_train.csv                      # Datos de entrenamiento (generados por notebook)
 │   └── X_test.csv                       # Datos de prueba (generados por notebook)
 │
@@ -54,6 +54,9 @@ Final/
 │       └── deploy-notebooks.yml         # Despliegue automático de notebooks con Jupyter Book
 │
 ├── drift_report.html                    # Reporte de deriva de datos (generado)
+├── _config.yml                          # Configuraciones del jbook
+├── _toc.yml                             # Table of content also jbook related
+├── requirements.txt                     # Librerias para el jbook
 └── README.md                            # Este archivo
 ```
 
