@@ -18,11 +18,11 @@ jobs:
     steps:
       # 1. Checkout del código
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       # 2. Configurar Python 3.10
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
       
@@ -55,7 +55,7 @@ jobs:
       # 7. Subir reporte de deriva como artefacto
       - name: Upload Drift Report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: drift-report
           path: drift_report.html
