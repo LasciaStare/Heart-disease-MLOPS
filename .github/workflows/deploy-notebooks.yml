@@ -124,7 +124,7 @@ jobs:
       # 5. Construir Jupyter Book
       - name: Build Jupyter Book
         run: |
-          jupyter-book build book/
+          jupyter-book build .
           
           # Verificar que se creó el directorio de salida
           if [ ! -d "book/_build/html" ]; then
